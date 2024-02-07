@@ -8,7 +8,6 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
@@ -33,7 +32,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 player.setY(player.getY() + changeY);
             }
             if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                System.out.println("space out");
                 Collection<? extends BulletSPI> bulletSPIs = getBulletSPIs();
                 for (BulletSPI bulletSPI : bulletSPIs) {
                     world.addEntity(bulletSPI.createBullet(player, gameData));

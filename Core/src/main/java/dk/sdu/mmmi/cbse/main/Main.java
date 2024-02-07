@@ -1,9 +1,12 @@
 package dk.sdu.mmmi.cbse.main;
 
+import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.enemy.Enemy;
+import dk.sdu.mmmi.cbse.common.enemy.EnemySPI;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
@@ -114,6 +117,10 @@ public class Main extends Application {
 //        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
 //            postEntityProcessorService.process(gameData, world);
 //        }
+
+        if (Math.random() * 60 < 1.0) {
+            spawnEnemy();
+        }
     }
 
     private void draw() {
@@ -141,5 +148,16 @@ public class Main extends Application {
 
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private Collection<? extends EnemySPI> getEnemySPIs() {
+        return ServiceLoader.load(EnemySPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private void spawnEnemy() {
+        Collection<? extends EnemySPI> enemySPIs = getEnemySPIs();
+        for (EnemySPI enemySPI : enemySPIs) {
+            world.addEntity(enemySPI.createEnemy(new Enemy(), gameData));
+        }
     }
 }
