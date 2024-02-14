@@ -16,23 +16,19 @@ public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
 
     @Override
     public void process(GameData gameData, World world) {
+        int totalEnemies = 0;
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            int random = (int) (Math.random() * 4.0);
+            Enemy actualEnemy = (Enemy) enemy;
 
-            if (random < 1.0) {
-                enemy.setRotation(enemy.getRotation() - 5);
-            }
-            if (1.0 <= random && random < 2.0) {
-                enemy.setRotation(enemy.getRotation() + 5);
-            }
-            if (2.0 <= random && random < 3.0) {
-                double changeX = Math.cos(Math.toRadians(enemy.getRotation()));
-                double changeY = Math.sin(Math.toRadians(enemy.getRotation()));
-                enemy.setX(enemy.getX() + changeX);
-                enemy.setY(enemy.getY() + changeY);
-            }
-            if (3.0 <= random && random < 4.0) {
+            enemy.setRotation(enemy.getRotation() + actualEnemy.noiseValue);
+
+            double changeX = Math.cos(Math.toRadians(enemy.getRotation()));
+            double changeY = Math.sin(Math.toRadians(enemy.getRotation()));
+            enemy.setX(enemy.getX() + changeX);
+            enemy.setY(enemy.getY() + changeY);
+
+            if (Math.random() * 120.0 < 1.0) {
                 Collection<? extends BulletSPI> bulletSPIs = getBulletSPIs();
                 for (BulletSPI bulletSPI : bulletSPIs) {
                     world.addEntity(bulletSPI.createBullet(enemy, gameData));
@@ -54,6 +50,15 @@ public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
             if (enemy.getY() > gameData.getDisplayHeight()) {
                 enemy.setY(gameData.getDisplayHeight()-1);
             }
+
+            totalEnemies++;
+            softNoise(actualEnemy);
+        }
+
+        // Spawn up to 5 enemies:
+        int maxEnemies = 5;
+        for (int i = totalEnemies; i < maxEnemies; i++) {
+            world.addEntity(createEnemy(new Enemy(), gameData));
         }
     }
 
@@ -68,5 +73,17 @@ public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
         enemyShip.setX(gameData.getDisplayHeight() * Math.random());
         enemyShip.setY(gameData.getDisplayWidth() * Math.random());
         return enemyShip;
+    }
+
+    private void softNoise(Enemy e) {
+        e.noiseValue += 0.5 - Math.random();
+
+        if (e.noiseValue > 5) {
+            e.noiseValue = 5;
+        }
+
+        if (e.noiseValue < -5) {
+            e.noiseValue = -5;
+        }
     }
 }

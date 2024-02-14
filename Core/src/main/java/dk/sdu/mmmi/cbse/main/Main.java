@@ -117,10 +117,6 @@ public class Main extends Application {
 //        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
 //            postEntityProcessorService.process(gameData, world);
 //        }
-
-        if (Math.random() * 60 < 1.0) {
-            spawnEnemy();
-        }
     }
 
     private void draw() {
@@ -148,16 +144,5 @@ public class Main extends Application {
 
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private Collection<? extends EnemySPI> getEnemySPIs() {
-        return ServiceLoader.load(EnemySPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-    }
-
-    private void spawnEnemy() {
-        Collection<? extends EnemySPI> enemySPIs = getEnemySPIs();
-        for (EnemySPI enemySPI : enemySPIs) {
-            world.addEntity(enemySPI.createEnemy(new Enemy(), gameData));
-        }
     }
 }
