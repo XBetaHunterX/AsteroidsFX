@@ -36,23 +36,28 @@ public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
             }
 
             if (enemy.getX() < 0) {
-                enemy.setX(1);
+                enemy.setX(gameData.getDisplayWidth());
             }
 
             if (enemy.getX() > gameData.getDisplayWidth()) {
-                enemy.setX(gameData.getDisplayWidth()-1);
+                enemy.setX(1);
             }
 
             if (enemy.getY() < 0) {
-                enemy.setY(1);
+                enemy.setY(gameData.getDisplayHeight());
             }
 
             if (enemy.getY() > gameData.getDisplayHeight()) {
-                enemy.setY(gameData.getDisplayHeight()-1);
+                enemy.setY(1);
             }
 
             totalEnemies++;
             softNoise(actualEnemy);
+            enemy.setDamageTimer(enemy.getDamageTimer() - 1);
+
+            if (enemy.getHealth() <= 0) {
+                enemy.setPolygonCoordinates(0);
+            }
         }
 
         // Spawn up to 5 enemies:
@@ -68,6 +73,8 @@ public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
 
     public Entity createEnemy(Entity e, GameData gameData) {
         Entity enemyShip = new Enemy();
+        enemyShip.setHealth(1);
+        enemyShip.setRadius(7.5);
         enemyShip.setPolygonCoordinates(-5,-5,10,0,-5,5);
         enemyShip.setX(gameData.getDisplayHeight() * Math.random());
         enemyShip.setY(gameData.getDisplayWidth() * Math.random());

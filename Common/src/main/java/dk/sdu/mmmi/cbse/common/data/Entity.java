@@ -11,6 +11,11 @@ public class Entity implements Serializable {
     private double x;
     private double y;
     private double rotation;
+    private int health;
+
+    private double radius;
+
+    private int damageTimer = 60;
             
 
     public String getID() {
@@ -51,6 +56,28 @@ public class Entity implements Serializable {
     public double getRotation() {
         return rotation;
     }
-        
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getDamageTimer() {
+        return damageTimer;
+    }
+
+    public void setDamageTimer(int damageTimer) {
+        this.damageTimer = damageTimer;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
 }

@@ -23,6 +23,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -114,23 +115,44 @@ public class Main extends Application {
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
-//        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
-//            postEntityProcessorService.process(gameData, world);
-//        }
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+            postEntityProcessorService.process(gameData, world);
+        }
     }
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
             if (polygons.get(entity) == null) {
-                Polygon polygon =  new Polygon(entity.getPolygonCoordinates());
+                Polygon polygon = new Polygon(entity.getPolygonCoordinates());
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);
             }
 
             Polygon polygon = polygons.get(entity);
+
+            // Pick color
+            if (entity.getClass().getSimpleName().contains("Player")) {
+                polygon.setFill(Color.HOTPINK);
+            }
+            if (entity.getClass().getSimpleName().contains("Asteroid")) {
+                polygon.setFill(Color.DARKGRAY);
+            }
+            if (entity.getClass().getSimpleName().contains("Enemy")) {
+                polygon.setFill(Color.DARKBLUE);
+            }
+            if (entity.getClass().getSimpleName().contains("Bullet")) {
+                polygon.setFill(Color.SEAGREEN);
+            }
+
             polygon.setTranslateX(entity.getX());
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
+
+            if (entity.getPolygonCoordinates().length <= 1) {
+                gameWindow.getChildren().remove(polygon);
+                polygons.remove(entity);
+                world.removeEntity(entity);
+            }
         }
     }
 

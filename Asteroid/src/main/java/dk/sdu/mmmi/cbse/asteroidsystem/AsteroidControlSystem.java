@@ -51,6 +51,11 @@ public class AsteroidControlSystem implements IEntityProcessingService {
             }
 
             totalAsteroids++;
+            asteroid.setDamageTimer(asteroid.getDamageTimer() - 1);
+
+            if (asteroid.getHealth() <= 0) {
+                asteroid.setPolygonCoordinates(0);
+            }
         }
 
         // Spawn up to 5 enemies:
@@ -58,6 +63,8 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         for (int i = totalAsteroids; i < maxAsteroids; i++) {
             world.addEntity(createAsteroid(new Asteroid(), gameData));
         }
+
+
     }
 
     // Use for splitting asteroids
@@ -77,6 +84,8 @@ public class AsteroidControlSystem implements IEntityProcessingService {
                 -Math.random() * asteroid.radius - 10 - 20 * Math.random(), Math.random() * asteroid.radius + 10 + 20 * Math.random(), // Lower left
                 -Math.random() * asteroid.radius - 10 - 20 * Math.random(), 0 // X-axis negative
         );
+        asteroid.setHealth(4);
+        asteroid.setRadius(asteroid.radius + 20);
         asteroid.setX(gameData.getDisplayHeight() * Math.random());
         asteroid.setY(gameData.getDisplayWidth() * Math.random());
 

@@ -21,15 +21,17 @@ public class AsteroidPlugin implements IGamePluginService {
     private Entity createAsteroid(GameData gameData) {
         Asteroid asteroid = new Asteroid();
         asteroid.setPolygonCoordinates(
-                -Math.random() * asteroid.radius + 5, -Math.random() * asteroid.radius + 5, // Top left
-                0, -Math.random() * asteroid.radius + 5, // Y-axis negative
-                Math.random() * asteroid.radius + 5, -Math.random() * asteroid.radius + 5, // Top right
-                Math.random() * asteroid.radius + 5, 0, // X-axis positive
-                Math.random() * asteroid.radius + 5, Math.random() * asteroid.radius + 5, // Lower right
-                0, Math.random() * asteroid.radius + 5, // Y-axis positive
-                -Math.random() * asteroid.radius, Math.random() * asteroid.radius + 5, // Lower left
-                -Math.random() * asteroid.radius + 5, 0 // X-axis negative
+                -Math.random() * asteroid.radius - 10 - 20 * Math.random(), -Math.random() * asteroid.radius - 10 - 20 * Math.random(), // Top left
+                0, -Math.random() * asteroid.radius - 10 - 20 * Math.random(), // Y-axis negative
+                Math.random() * asteroid.radius + 10 + 20 * Math.random(), -Math.random() * asteroid.radius - 10 - 20 * Math.random(), // Top right
+                Math.random() * asteroid.radius + 10 + 20 * Math.random(), 0, // X-axis positive
+                Math.random() * asteroid.radius + 10 + 20 * Math.random(), Math.random() * asteroid.radius + 10 + 20 * Math.random(), // Lower right
+                0, Math.random() * asteroid.radius + 10 + 20 * Math.random(), // Y-axis positive
+                -Math.random() * asteroid.radius - 10 - 20 * Math.random(), Math.random() * asteroid.radius + 10 + 20 * Math.random(), // Lower left
+                -Math.random() * asteroid.radius - 10 - 20 * Math.random(), 0 // X-axis negative
         );
+        asteroid.setHealth(4);
+        asteroid.setRadius(asteroid.radius + 20);
         asteroid.setX(gameData.getDisplayHeight()/2);
         asteroid.setY(gameData.getDisplayWidth()/2);
 

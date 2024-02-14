@@ -41,25 +41,29 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
                 actualPlayer.bulletCooldown = actualPlayer.cooldown;
             }
+
+            if (player.getX() < 0) {
+                player.setX(gameData.getDisplayWidth());
+            }
+
+            if (player.getX() > gameData.getDisplayWidth()) {
+                player.setX(1);
+            }
+
+            if (player.getY() < 0) {
+                player.setY(gameData.getDisplayHeight());
+            }
+
+            if (player.getY() > gameData.getDisplayHeight()) {
+                player.setY(1);
+            }
             
-        if (player.getX() < 0) {
-            player.setX(1);
-        }
+            actualPlayer.bulletCooldown--;
+            player.setDamageTimer(player.getDamageTimer() - 1);
 
-        if (player.getX() > gameData.getDisplayWidth()) {
-            player.setX(gameData.getDisplayWidth()-1);
-        }
-
-        if (player.getY() < 0) {
-            player.setY(1);
-        }
-
-        if (player.getY() > gameData.getDisplayHeight()) {
-            player.setY(gameData.getDisplayHeight()-1);
-        }
-            
-        actualPlayer.bulletCooldown--;
-
+            if (player.getHealth() <= 0) {
+                player.setPolygonCoordinates(0);
+            }
         }
     }
 
