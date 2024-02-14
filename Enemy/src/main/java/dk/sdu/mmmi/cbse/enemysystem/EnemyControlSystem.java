@@ -66,7 +66,6 @@ public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
         return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
-    @Override
     public Entity createEnemy(Entity e, GameData gameData) {
         Entity enemyShip = new Enemy();
         enemyShip.setPolygonCoordinates(-5,-5,10,0,-5,5);
