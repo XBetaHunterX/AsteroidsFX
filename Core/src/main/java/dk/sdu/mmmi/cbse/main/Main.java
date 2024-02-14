@@ -21,6 +21,8 @@ import static java.util.stream.Collectors.toList;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -34,6 +36,8 @@ public class Main extends Application {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
+
+    private ImageView backgroundImage;
     
 
     public static void main(String[] args) {
@@ -45,6 +49,15 @@ public class Main extends Application {
         Text text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(text);
+
+        // Load the background image
+        try {
+            backgroundImage = new ImageView(new Image("file:Common/src/main/java/dk/sdu/mmmi/cbse/common/assets/Background.png"));
+            gameWindow.getChildren().add(backgroundImage);
+        } catch (Exception e) {
+            System.err.println("Error loading background image: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
@@ -135,13 +148,13 @@ public class Main extends Application {
                 polygon.setFill(Color.HOTPINK);
             }
             if (entity.getClass().getSimpleName().contains("Asteroid")) {
-                polygon.setFill(Color.DARKGRAY);
+                polygon.setFill(Color.DIMGRAY);
             }
             if (entity.getClass().getSimpleName().contains("Enemy")) {
-                polygon.setFill(Color.DARKBLUE);
+                polygon.setFill(Color.WHEAT);
             }
             if (entity.getClass().getSimpleName().contains("Bullet")) {
-                polygon.setFill(Color.SEAGREEN);
+                polygon.setFill(Color.LIGHTGOLDENRODYELLOW);
             }
 
             polygon.setTranslateX(entity.getX());
