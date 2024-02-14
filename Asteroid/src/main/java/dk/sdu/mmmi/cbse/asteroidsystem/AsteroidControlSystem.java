@@ -59,7 +59,7 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         }
 
         // Spawn up to 5 enemies:
-        int maxAsteroids = 10;
+        int maxAsteroids = 7;
         for (int i = totalAsteroids; i < maxAsteroids; i++) {
             world.addEntity(createAsteroid(new Asteroid(), gameData));
         }
