@@ -7,4 +7,5 @@ public class Asteroid extends Entity {
     double speedX = 1.5 - Math.random() * 3;
     double speedY = 1.5 - Math.random() * 3;
     double rotationSpeed = 1.5 - Math.random() * 3;
+    boolean isSplit = false;
 }

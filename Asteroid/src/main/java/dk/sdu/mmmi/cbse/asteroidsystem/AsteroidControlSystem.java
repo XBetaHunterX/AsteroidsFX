@@ -55,16 +55,26 @@ public class AsteroidControlSystem implements IEntityProcessingService {
 
             if (asteroid.getHealth() <= 0) {
                 asteroid.setPolygonCoordinates(0);
+                if (!actualAsteroid.isSplit) {
+                    int splitAmount = 2;
+                    for (int i = 0; i < splitAmount; i++) {
+                        Asteroid newFraction = (Asteroid) createAsteroid(new Asteroid(), gameData);
+                        newFraction.isSplit = true;
+                        newFraction.radius = 0;
+                        newFraction.setHealth(newFraction.getHealth() / splitAmount);
+                        newFraction.setX(asteroid.getX());
+                        newFraction.setY(asteroid.getY());
+                        world.addEntity(newFraction);
+                    }
+                }
             }
         }
 
-        // Spawn up to 5 enemies:
-        int maxAsteroids = 7;
+        // Spawn up to 6 asteroids:
+        int maxAsteroids = 6;
         for (int i = totalAsteroids; i < maxAsteroids; i++) {
             world.addEntity(createAsteroid(new Asteroid(), gameData));
         }
-
-
     }
 
     // Use for splitting asteroids

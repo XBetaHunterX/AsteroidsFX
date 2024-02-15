@@ -60,7 +60,7 @@ public class EnemyControlSystem implements IEntityProcessingService, EnemySPI {
             }
         }
 
-        // Spawn up to 5 enemies:
+        // Spawn up to 3 enemies:
         int maxEnemies = 3;
         for (int i = totalEnemies; i < maxEnemies; i++) {
             world.addEntity(createEnemy(new Enemy(), gameData));
