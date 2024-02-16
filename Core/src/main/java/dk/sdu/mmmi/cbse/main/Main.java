@@ -38,6 +38,8 @@ public class Main extends Application {
     private final Pane gameWindow = new Pane();
 
     private ImageView backgroundImage;
+    private Text scoreText;
+    private int score;
     
 
     public static void main(String[] args) {
@@ -46,10 +48,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        Text text = new Text(10, 20, "Destroyed asteroids: 0");
-        gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().add(text);
-
         // Load the background image
         try {
             backgroundImage = new ImageView(new Image("file:Common/src/main/java/dk/sdu/mmmi/cbse/common/assets/Background.png"));
@@ -58,6 +56,16 @@ public class Main extends Application {
             System.err.println("Error loading background image: " + e.getMessage());
             e.printStackTrace();
         }
+
+        score = 0;
+        scoreText = new Text(0, 0, "Destroyed asteroids: " + score);
+        scoreText.setScaleX(gameData.getDisplayWidth() / 300.0);
+        scoreText.setScaleY(gameData.getDisplayHeight() / 300.0);
+        scoreText.setX(scoreText.getScaleX() * scoreText.getText().length() * 2.0);
+        scoreText.setY(scoreText.getScaleY() * scoreText.getText().length() / 2.0);
+        scoreText.setFill(Color.LIGHTGREEN);
+        gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        gameWindow.getChildren().add(scoreText);
 
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
@@ -165,6 +173,12 @@ public class Main extends Application {
                 gameWindow.getChildren().remove(polygon);
                 polygons.remove(entity);
                 world.removeEntity(entity);
+
+                if (entity.getClass().getSimpleName().contains("Asteroid")) {
+                    score++;
+                    scoreText.setText("Destroyed asteroids: " + score);
+                    scoreText.setX(scoreText.getScaleX() * scoreText.getText().length() * 2.0);
+                }
             }
         }
     }
