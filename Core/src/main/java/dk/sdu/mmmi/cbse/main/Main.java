@@ -1,19 +1,13 @@
 package dk.sdu.mmmi.cbse.main;
 
-import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.common.enemy.Enemy;
-import dk.sdu.mmmi.cbse.common.enemy.EnemySPI;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
