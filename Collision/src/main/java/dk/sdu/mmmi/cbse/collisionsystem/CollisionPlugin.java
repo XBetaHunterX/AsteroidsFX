@@ -19,8 +19,8 @@ public class CollisionPlugin implements IGamePluginService {
         collisionChecker.setHealth(10);
         collisionChecker.setRadius(Double.MIN_NORMAL);
         collisionChecker.setPolygonCoordinates(0, 0);
-        collisionChecker.setX(gameData.getDisplayHeight()/2);
-        collisionChecker.setY(gameData.getDisplayWidth()/2);
+        collisionChecker.setX(Integer.MIN_VALUE);
+        collisionChecker.setY(Integer.MIN_VALUE);
         return collisionChecker;
     }
 
