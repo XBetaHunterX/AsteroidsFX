@@ -133,6 +133,8 @@ public class Main extends Application {
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
+
+        System.out.println(world.getEntities().size() + " entities");
     }
 
     private void draw() {
