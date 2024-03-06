@@ -71,7 +71,7 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         }
 
         // Spawn up to 6 asteroids:
-        int maxAsteroids = 10000;
+        int maxAsteroids = 6;
         for (int i = totalAsteroids; i < maxAsteroids; i++) {
             world.addEntity(createAsteroid(new Asteroid(), gameData));
         }

@@ -3,7 +3,6 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
 module Asteroid {
     exports dk.sdu.mmmi.cbse.asteroidsystem;
-    exports dk.sdu.mmmi.cbse;
     requires Common;
     // Use for asteroid Fractures
     // uses dk.sdu.mmmi.cbse.common.bullet.BulletSPI;

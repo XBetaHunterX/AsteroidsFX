@@ -4,7 +4,6 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
 module Bullet {
     exports dk.sdu.mmmi.cbse.bulletsystem;
-    exports dk.sdu.mmmi.cbse;
     requires Common;
     requires CommonBullet;
     provides IGamePluginService with dk.sdu.mmmi.cbse.bulletsystem.BulletPlugin;
