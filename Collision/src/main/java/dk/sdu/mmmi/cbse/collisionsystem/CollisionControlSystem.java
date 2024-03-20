@@ -6,7 +6,6 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 public class CollisionControlSystem implements IPostEntityProcessingService {
     @Override
