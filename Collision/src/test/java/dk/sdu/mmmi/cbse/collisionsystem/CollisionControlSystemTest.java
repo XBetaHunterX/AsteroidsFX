@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 public class CollisionControlSystemTest {
 
     private CollisionControlSystem collisionControlSystem;
@@ -100,25 +103,68 @@ public class CollisionControlSystemTest {
 
     @Test
     public void testIsCollision() {
-        Entity entity1 = new Entity();
-        entity1.setX(0);
-        entity1.setY(0);
-        entity1.setRadius(1.0);
+        // Setup
+        // Access the private method
+        Method isCollisionMethod = null;
+        try {
+            isCollisionMethod = CollisionControlSystem.class.getDeclaredMethod("isCollision", Entity.class, Entity.class);
 
-        Entity entity2 = new Entity();
-        // Close enough to collide
-        entity2.setX(1.0);
-        entity2.setY(1.0);
-        entity2.setRadius(1.0);
+            // Make it accessible
+            isCollisionMethod.setAccessible(true);
 
-        world.addEntity(entity1);
-        world.addEntity(entity2);
+            Entity entity1 = new Entity();
+            entity1.setX(0);
+            entity1.setY(0);
+            entity1.setRadius(1.0);
 
-        collisionControlSystem.
+            Entity entity2 = new Entity();
+            // Close enough to collide
+            entity2.setX(1.0);
+            entity2.setY(1.0);
+            entity2.setRadius(1.0);
 
-        collisionControlSystem.process(gameData, world);
+            Entity entity3 = new Entity();
+            entity3.setX(0);
+            entity3.setY(0);
+            entity3.setRadius(1.0);
 
-        assertEquals(9, entity1.getHealth(), "Entity1 should have lost health due to collision.");
-        assertTrue(entity1.getDamageTimer() > 0, "Entity1 should have a damage timer set due to collision.");
+            Entity entity4 = new Entity();
+            // CDistant enough to not collide
+            entity4.setX(10.0);
+            entity4.setY(10.0);
+            entity4.setRadius(1.0);
+
+            assertTrue((Boolean) isCollisionMethod.invoke(collisionControlSystem, entity1, entity2), "Method should have returned true as entities should collide.");
+            assertFalse((Boolean) isCollisionMethod.invoke(collisionControlSystem, entity3, entity4), "Method should have returned false as entities should not collide.");
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void testCalculateDistanceSquared() {
+        // Setup
+        // Access the private method
+        Method calculateDistanceSquaredMethod = null;
+        try {
+            calculateDistanceSquaredMethod = CollisionControlSystem.class.getDeclaredMethod("calculateDistanceSquared", Entity.class, Entity.class);
+
+            // Make it accessible
+            calculateDistanceSquaredMethod.setAccessible(true);
+
+            Entity entity1 = new Entity();
+            entity1.setX(0);
+            entity1.setY(0);
+
+            Entity entity2 = new Entity();
+            entity2.setX(3.0);
+            entity2.setY(4.0);
+
+            // Distance squared between (0,0) and (3,4) is 3^2 + 4^2 = 25
+            assertEquals(25.0, calculateDistanceSquaredMethod.invoke(collisionControlSystem, entity1, entity2));
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
