@@ -6,9 +6,6 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CollisionPluginTest {
@@ -35,7 +32,9 @@ public class CollisionPluginTest {
 
         // Check that attributes are set correctly
         assertEquals(10, addedEntity.getHealth(), "The added entity should have 10 health");
-        assertEquals(10, addedEntity.getHealth(), "The added entity should have 10 health");
+        assertEquals(0, addedEntity.getRadius(), "The added entity should have a radius of 0");
+        assertEquals(Integer.MIN_VALUE, addedEntity.getX(), "The added entity should have an 'X' value of " + Integer.MIN_VALUE);
+        assertEquals(Integer.MIN_VALUE, addedEntity.getY(), "The added entity should have an 'Y' value of " + Integer.MIN_VALUE);
     }
 
     @Test
