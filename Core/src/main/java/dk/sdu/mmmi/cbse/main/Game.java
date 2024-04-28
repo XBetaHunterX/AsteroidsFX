@@ -200,12 +200,11 @@ public class Game {
                     System.out.println();
                     HttpClient httpClient = HttpClient.newHttpClient();
                     HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("http://localhost:8080/score"))
-                            .GET().build();
+                            .uri(URI.create("http://localhost:8080/score/update/" + 1))
+                            .PUT(HttpRequest.BodyPublishers.ofString("")).build();
 
                     try {
                         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                        scoreText.setText("Score: " + response.body());
                     } catch (IOException | InterruptedException e) {
 
                     }

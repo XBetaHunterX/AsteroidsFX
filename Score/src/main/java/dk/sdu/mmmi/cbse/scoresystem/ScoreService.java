@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 @SpringBootApplication
+@RequestMapping("/score")
 @RestController
-@CrossOrigin
 public class ScoreService {
     private Long currentScore = 0L;
 
@@ -14,12 +14,12 @@ public class ScoreService {
         SpringApplication.run(ScoreService.class, args);
     }
 
-    @GetMapping("/score")
+    @GetMapping
     public Long getScore() {
         return currentScore;
     }
 
-    @PutMapping("score/update/{score}")
+    @PutMapping("/update/{score}")
     public Long updateScore(@PathVariable(value = "score") Long score) {
         currentScore += score;
         return currentScore;
