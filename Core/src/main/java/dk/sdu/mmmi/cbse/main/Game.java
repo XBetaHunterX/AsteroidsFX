@@ -18,6 +18,8 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,11 @@ import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.stream.Collectors.toList;
+
+// For microservice:
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -188,6 +195,20 @@ public class Game {
                     score++;
                     scoreText.setText("Destroyed asteroids: " + score);
                     scoreText.setX(scoreText.getScaleX() * scoreText.getText().length() * 2.0);
+
+                    // Update score for microservice
+                    System.out.println();
+                    HttpClient httpClient = HttpClient.newHttpClient();
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("http://localhost:8080/score"))
+                            .GET().build();
+
+                    try {
+                        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                        scoreText.setText("Score: " + response.body());
+                    } catch (IOException | InterruptedException e) {
+
+                    }
                 }
             }
         }
