@@ -8,5 +8,5 @@ module Asteroid {
     // Use for asteroid Fractures
     // uses dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
     provides IGamePluginService with dk.sdu.mmmi.cbse.asteroidsystem.AsteroidPlugin;
-    provides IEntityProcessingService with dk.sdu.mmmi.cbse.asteroidsystem.AsteroidControlSystem;
+    provides IEntityProcessingService with dk.sdu.mmmi.cbse.asteroidsystem.AsteroidControlSystem, dk.sdu.mmmi.cbse.SameName;
 }
