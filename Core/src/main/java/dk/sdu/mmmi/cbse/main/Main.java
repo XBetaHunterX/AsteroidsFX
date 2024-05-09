@@ -224,13 +224,4 @@ public class Main extends Application {
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return ServiceLoader.load(layer, IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
-
-    private static ModuleLayer createLayer(String from, String module) {
-        System.out.println("Layer created");
-
-        var finder = ModuleFinder.of(Paths.get(from));
-        var parent = ModuleLayer.boot();
-        var cf = parent.configuration().resolve(finder, ModuleFinder.of(), Set.of(module));
-        return parent.defineModulesWithOneLoader(cf, ClassLoader.getSystemClassLoader());
-    }
 }
