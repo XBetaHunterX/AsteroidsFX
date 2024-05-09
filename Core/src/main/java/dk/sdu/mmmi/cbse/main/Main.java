@@ -46,7 +46,7 @@ public class Main extends Application {
     
 
     public static void main(String[] args) {
-        Path pluginsDir = Paths.get("plugins"); // Directory with plugins JARs
+        Path pluginsDir = Paths.get("plugins\\mods-mvn"); // Directory with plugins JARs
 
         // Search for plugins in the plugins directory
         ModuleFinder pluginsFinder = ModuleFinder.of(pluginsDir);
