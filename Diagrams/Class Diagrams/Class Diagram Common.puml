@@ -1,0 +1,108 @@
+@startuml
+'https://plantuml.com/class-diagram
+title Common Class Diagram
+header Version 1.0 - Documentation
+footer Diagram generated on: 2024-05-10
+
+package Common {
+    class Entity {
+        -ID : UUID
+        -polygonCoordinates : double[]
+        -x : double
+        -y : double
+        -rotation : double
+        -health : int
+        -radius : double
+        -damageTimer : int
+
+        +getID() : String
+        +setPolygonCoordinates(double... coordinates) : void
+        +getPolygonCoordinates() : double[]
+        +setX(double x) : void
+        +getX() : double
+        +setY(double y) : void
+        +getY() : double
+        +setRotation(double rotation) : void
+        +getRotation() : double
+        +setHealth(int health) : void
+        +getHealth() : int
+        +setDamageTimer(int damageTimer) : void
+        +getDamageTimer() : int
+        +setRadius(double radius) : void
+        +getRadius() : double
+    }
+
+    class GameData {
+        -displayWidth : int
+        -displayHeight : int
+        -keys : GameKeys
+
+        +getKeys() : GameKeys
+        +setDisplayWidth(int width) : void
+        +getDisplayWidth() : int
+        +setDisplayHeight(int height) : void
+        +getDisplayHeight() : int
+    }
+    GameData --> GameKeys
+
+    class GameKeys {
+        -keys : boolean[]
+        -pkeys : boolean[]
+        -NUM_KEYS : int
+        +UP : int
+        +LEFT : int
+        +RIGHT : int
+        +SPACE : int
+
+        +update() : void
+        +setKey(int k, boolean b) : void
+        +isDown(int k) : boolean
+        +isPressed(int k) : boolean
+    }
+
+    class World {
+        -entityMap : Map<String, Entity>
+
+        +addEntity(Entity entity) : String
+        +removeEntity(String entityID) : void
+        +removeEntity(Entity entity) : void
+        +getEntities() : Collection<Entity>
+        +getEntities(Class<E>... entityTypes) : List<Entity>
+        +getEntity(String ID) : Entity
+    }
+    World *-- Entity
+
+    interface IEntityProcessingService {
+        +process(GameData gameData, World world) : void
+    }
+    IEntityProcessingService --> GameData
+    IEntityProcessingService --> World
+
+    interface IGamePluginService {
+        +start(GameData gameData, World world) : void
+        +stop(GameData gameData, World world) : void
+    }
+    IGamePluginService --> GameData
+    IGamePluginService --> World
+
+    interface IPostEntityProcessingService {
+        +process(GameData gameData, World world) : void
+    }
+    IPostEntityProcessingService --> GameData
+    IPostEntityProcessingService --> World
+}
+
+'https://stackoverflow.com/questions/54882822/plantuml-class-diagram-field-method-visibility-in-legend
+skinparam legendBackgroundColor #ffffff,
+legend top left
+**Legend**
+|=   field |= method |=  |
+|      <img:http://s.plantuml.com/private-field.png>      |      <img:http://s.plantuml.com/private-method.png>     | Private |
+|      <img:http://s.plantuml.com/protected-field.png>    |      <img:http://s.plantuml.com/protected-method.png>   | Protected |
+|      <img:http://s.plantuml.com/package-private-field.png>      |      <img:http://s.plantuml.com/package-private-method.png>    | Package Private |
+|      <img:http://s.plantuml.com/public-field.png>      |      <img:http://s.plantuml.com/public-method.png>     | Public |
+'https://www.youtube.com/watch?v=pYvL31l-hoY&ab_channel=Randomcode
+<img:https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Uml_classes_en.svg/230px-Uml_classes_en.svg.png>
+
+end legend
+@enduml
