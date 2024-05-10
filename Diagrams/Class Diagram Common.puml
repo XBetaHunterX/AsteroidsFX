@@ -40,6 +40,7 @@ package Common {
         +setDisplayHeight(int height) : void
         +getDisplayHeight() : int
     }
+    GameData --> GameKeys
 
     class GameKeys {
         -keys : boolean[]
@@ -66,29 +67,26 @@ package Common {
         +getEntities(Class<E>... entityTypes) : List<Entity>
         +getEntity(String ID) : Entity
     }
+    World *-- Entity
 
     interface IEntityProcessingService {
         +process(GameData gameData, World world) : void
     }
+    IEntityProcessingService --> GameData
+    IEntityProcessingService --> World
 
     interface IGamePluginService {
         +start(GameData gameData, World world) : void
         +stop(GameData gameData, World world) : void
     }
+    IGamePluginService --> GameData
+    IGamePluginService --> World
 
     interface IPostEntityProcessingService {
         +process(GameData gameData, World world) : void
     }
-
-    ' Relationships between classes and interfaces
-    GameData --> GameKeys : Navigable Association
-    World *-- Entity : Composition
-    IEntityProcessingService --> GameData : Navigable Association
-    IEntityProcessingService --> World : Navigable Association
-    IGamePluginService --> GameData : Navigable Association
-    IGamePluginService --> World : Navigable Association
-    IPostEntityProcessingService --> GameData : Navigable Association
-    IPostEntityProcessingService --> World : Navigable Association
+    IPostEntityProcessingService --> GameData
+    IPostEntityProcessingService --> World
 }
 
 'https://stackoverflow.com/questions/54882822/plantuml-class-diagram-field-method-visibility-in-legend
