@@ -89,7 +89,7 @@ package Common {
 
 'https://stackoverflow.com/questions/54882822/plantuml-class-diagram-field-method-visibility-in-legend
 skinparam legendBackgroundColor #ffffff,
-legend left
+legend top left
 **Legend**
 |=   field |= method |=  |
 |      <img:http://s.plantuml.com/private-field.png>      |      <img:http://s.plantuml.com/private-method.png>     | Private |
