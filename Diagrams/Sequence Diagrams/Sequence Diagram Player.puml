@@ -57,4 +57,13 @@ group process(GameData, World)
         end
     end
 end
+
+group getBulletSPIs()
+    PlayerControlSystem -> BulletSPI : load(BulletSPI.class)
+    PlayerControlSystem <- BulletSPI : Return **ServiceLoader<BulletSPI>**
+    loop for each BulletSPI provider
+        PlayerControlSystem -> "Collection<? extends BulletSPI>" : add(provider.get())
+        "Collection<? extends BulletSPI>" -> PlayerControlSystem : **Return flow**
+    end
+end
 @enduml
