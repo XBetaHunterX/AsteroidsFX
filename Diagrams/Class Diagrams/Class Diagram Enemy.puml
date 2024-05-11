@@ -84,7 +84,7 @@ package CommonBullet {
 }
 CommonBullet ....> Common
 CommonBullet.Bullet --|> Common.Entity
-CommonBullet ..> Enemy : Dependency Injection
+CommonBullet.Bullet <.. Enemy.EnemyControlSystem : Dependency Injection
 
 'https://stackoverflow.com/questions/54882822/plantuml-class-diagram-field-method-visibility-in-legend
 skinparam legendBackgroundColor #ffffff,
