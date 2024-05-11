@@ -4,13 +4,26 @@ title Player Sequence Diagram
 header Version 1.0 - Documentation
 footer Diagram generated on: 2024-05-11
 
-participant PlayerControlSystem
+box "Core Module"
+participant Game
+box end
+
+box "Common Module"
 participant World
 participant GameData
+end box
+
+box "Player Module"
+participant PlayerControlSystem
 participant Player
+end box
+
+box "CommonBullet Module"
 participant BulletSPI
 participant "Collection<? extends BulletSPI>"
+end box
 
+Game -> PlayerControlSystem
 group process(GameData, World)
     World <- PlayerControlSystem : getEntities(Player.class)
     World -> PlayerControlSystem : Return **List<Entity>**
@@ -57,6 +70,7 @@ group process(GameData, World)
         end
     end
 end
+PlayerControlSystem -> Game
 
 group getBulletSPIs()
     PlayerControlSystem -> BulletSPI : load(BulletSPI.class)
