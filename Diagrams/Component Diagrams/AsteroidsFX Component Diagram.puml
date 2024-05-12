@@ -1,0 +1,66 @@
+@startuml
+skinparam linetype polyline
+skinparam arrowthickness 2
+
+package "AsteroidsFX" {
+    ' Modules:
+    [Core]
+
+    [Asteroid]
+    [Bullet]
+    [Collision]
+    [Enemy]
+    [Player]
+
+    [Score]
+
+    [CommonBullet]
+    [Common]
+
+    ' Interfaces:
+    interface IGamePluginService #000080
+    interface IEntityProcessingService #FF7F50
+    interface IPostEntityProcessingService #98FF98
+
+    ' Relations:
+    [Core] --down-- IGamePluginService #000080
+    [Core] --down-- IEntityProcessingService #FF7F50
+    [Core] --down-- IPostEntityProcessingService #98FF98
+    [Core] ..down..> [Common]
+
+    ' Asteroid:
+    [Asteroid] --up--( IGamePluginService #000080
+    [Asteroid] --up--( IEntityProcessingService #FF7F50
+    [Asteroid] ..down..> [Common]
+
+    ' Bullet:
+    [Bullet] --up--( IGamePluginService #000080
+    [Bullet] --up--( IEntityProcessingService #FF7F50
+    [Bullet] ..down..> [Common]
+
+    ' Enemy:
+    [Enemy] --up--( IGamePluginService #000080
+    [Enemy] --up--( IEntityProcessingService #FF7F50
+    [Enemy] ..down..> [Common]
+    [CommonBullet] ..> [Enemy] : Dependency Injection
+
+    ' Player:
+    [Player] --up--( IGamePluginService #000080
+    [Player] --up--( IEntityProcessingService #FF7F50
+    [Player] ..down..> [Common]
+    [CommonBullet] ..> [Player] : Dependency Injection
+
+    ' Collision:
+    [Collision] --up--( IGamePluginService #000080
+    [Collision] --up--( IPostEntityProcessingService #98FF98
+    [Collision] ..down..> [Common]
+
+    ' CommonBullet
+    [CommonBullet] ..down..> [Common]
+
+    ' Score:
+
+}
+
+
+@enduml
