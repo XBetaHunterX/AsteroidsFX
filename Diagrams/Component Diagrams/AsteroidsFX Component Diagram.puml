@@ -1,4 +1,8 @@
 @startuml
+title AsteroidsFX Component Diagram
+header Version 1.0 - Documentation
+footer Diagram generated on: 2024-05-13
+
 skinparam linetype polyline
 skinparam arrowthickness 2
 
@@ -12,7 +16,9 @@ package "AsteroidsFX" {
     [Enemy]
     [Player]
 
-    [Score]
+    component "Score (Microservice)" {
+      portin "ScoreService Server"
+    }
 
     [CommonBullet]
     [Common]
@@ -42,13 +48,13 @@ package "AsteroidsFX" {
     [Enemy] --up--( IGamePluginService #000080
     [Enemy] --up--( IEntityProcessingService #FF7F50
     [Enemy] ..down..> [Common]
-    [CommonBullet] ..> [Enemy] : Dependency Injection
+    [CommonBullet] ...> [Enemy] : "Dependency\nInjection"
 
     ' Player:
     [Player] --up--( IGamePluginService #000080
     [Player] --up--( IEntityProcessingService #FF7F50
     [Player] ..down..> [Common]
-    [CommonBullet] ..> [Player] : Dependency Injection
+    [CommonBullet] ...> [Player] : "Dependency\nInjection"
 
     ' Collision:
     [Collision] --up--( IGamePluginService #000080
@@ -59,8 +65,49 @@ package "AsteroidsFX" {
     [CommonBullet] ..down..> [Common]
 
     ' Score:
-
+    "ScoreService Server" <-left-> [Core] : HTTP Requests
 }
 
+package Legend {
+    package Entities {
+        component "Component" {
+            portin Endpoint
+        }
+        () Interface
+    }
 
+    package Relations {
+        [C1]
+        () I1 #000080
+        [C1] -right-( I1 #000080 : Require
+        [C1] -[hidden]down- [C2]
+
+        [C2]
+        () I2 #FF7F50
+        [C2] -right- I2 #FF7F50 : Provides
+        [C2] -[hidden]down- [C3]
+
+        [C3]
+        () Binding #98FF98
+        [C4]
+        [C3] -right( Binding #98FF98 : Provides
+        Binding -right- [C4]  #98FF98 : Require
+        [C3] -[hidden]down- [C5]
+
+        [C5]
+        [C6]
+        [C5] .right.> [C6] : Dependency or Injection
+        [C5] -[hidden]down- [C8]
+
+        component "C7" {
+            portin EP1
+        }
+        [C8]
+        EP1 <--[hidden]left--> [C8]
+        EP1 <--left--> [C8] : HTTP Requests
+    }
+
+    Interface -[hidden]down-> Relations
+    "Component" -[hidden]down-> Relations
+}
 @enduml
