@@ -90,8 +90,8 @@ package Legend {
         [C3]
         () Binding #98FF98
         [C4]
-        [C3] -right( Binding #98FF98 : Provides
-        Binding -right- [C4]  #98FF98 : Require
+        [C3] -right( Binding #98FF98 : Require
+        Binding -right- [C4]  #98FF98 : Provides 
         [C3] -[hidden]down- [C5]
 
         [C5]
