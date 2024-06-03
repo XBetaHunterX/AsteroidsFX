@@ -12,9 +12,7 @@ public class Entity implements Serializable {
     private double y;
     private double rotation;
     private int health;
-
     private double radius;
-
     private int damageTimer = 60;
             
 
